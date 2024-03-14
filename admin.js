@@ -1,40 +1,37 @@
-const { Kafka } = require('kafkajs')
-
-const kafka = new Kafka({
-    clientId: "kafka-app",
-    brokers: ["http://192.168.29.244:9092"]
-})
+const { kafka } = require("./client");
 
 async function init() {
-    const admin = kafka.admin()
+    const admin = kafka.admin();
+  
     try {
-        await admin.connect()
-        console.log('admin connection success')
+        admin.connect();
+        console.log("admin connection success");
     } catch (e) {
-        console.log('admin connection error: ', e)
+        console.log("\nERROR - ADMIN CONNECTION: \n", e, "\n")
     }
 
     try {
         await admin.createTopics({
-            validateOnly: false,
-            waitForLeaders: false,
-            timeout: 30,
-            topics: [{
-                topic: 'messages',
+            topics: [
+            {
+                topic: "messages",
                 numPartitions: 2,
-            }]
-        })
-        console.log("Topic [messages] creation success")
+            },
+            ],
+        });
+        console.log("topic creation success [messages]");
     } catch (e) {
-        console.log("error creating Topic [messages]: ", e)
+        console.log("\nERROR - TOPIC CREATION [messages]: \n", e, "\n")
     }
-
-
+  
+  
     try {
-        await admin.disconnect()
-        console.log('admin disconnected')
+        await admin.disconnect();
+        console.log("admin disconnected");
     } catch (e) {
-        console.log('error disconnecting admin: ', e)
+        console.log("\nERROR - ADMIN DISCONNECTION: \n", e, "\n")
     }
 
 }
+
+init();
