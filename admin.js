@@ -14,7 +14,7 @@ async function init() {
         await admin.createTopics({
             topics: [
             {
-                topic: "messages",
+                topic: "chatMessages",
                 numPartitions: 2,
             },
             ],

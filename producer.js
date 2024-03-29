@@ -18,7 +18,7 @@ async function init() {
     rl.on('line', async function(line) {
         const [userName, userMessage, partition] = line.split(' ')
         await producer.send({
-            topic: 'messages',
+            topic: 'chatMessages',
             messages: [
                 { 
                     partition: partition,
